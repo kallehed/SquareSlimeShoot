@@ -1,3 +1,4 @@
+import asyncio
 import pygame, math, random
 
 # Written in Python 3.7, pygame 1.9.6 apparently
@@ -116,10 +117,12 @@ class Game:
 
         self.objects_to_add.add(Banner(self, "MOVE WITH ARROW KEYS, SHOOT WITH MOUSE",0.05))
 
-        self.game_loop()
+        #self.game_loop()
 
+    async def start_main_loop(self):
+        await self.game_loop()
 
-    def game_loop(self):
+    async def game_loop(self):
         while self.running:
             self.mouse_clicked_this_frame = False
             for event in pygame.event.get():
@@ -135,6 +138,7 @@ class Game:
             self.draw_game_objects()
 
             pygame.display.flip()
+            await asyncio.sleep(0)
 
             self.frame_time = self.clock.tick(self.framerate)
     
@@ -188,6 +192,7 @@ class Game:
             if self.score > self.highscore: # set new highscore
                 self.highscore = self.score
             self.__init__(self.highscore)
+            self.start_main_loop()
 
     def game_general_logic(self):
         # spawn enemies
@@ -1012,8 +1017,8 @@ class Enemy8(Enemy):
         self.handle_shooting_player(game)
 def main():
     pygame.init()
-    
     game = Game()
+    asyncio.run(game.start_main_loop())
 
     pygame.quit()
 
