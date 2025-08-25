@@ -294,7 +294,7 @@ class Game_Object:
 class Banner: # moves across screen comicly with text
     def __init__(self, game, text, x_vel=random.uniform(0.2,0.8)):
         self.x = -game.SCREEN_WIDTH*0.1
-        self.y = random.randint(0.1*game.SCREEN_HEIGHT,0.9*game.SCREEN_HEIGHT)
+        self.y = random.randint(int(0.1*game.SCREEN_HEIGHT),int(0.9*game.SCREEN_HEIGHT))
         self.text = text
         self.x_vel = x_vel
         self.color = (random.randint(0,255),random.randint(0,255),random.randint(50,255))
